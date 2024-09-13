@@ -1,0 +1,9 @@
+# Clear Access Logs, Error Logs Monthly 14th day of the month
+0 0 */14 * * echo "" > /var/log/apache2/other_vhosts_access.log
+0 0 */14 * * echo "" > /var/log/apache2/error.log
+
+# Remove Cachegrind Output Files Every Hour
+0 * * * * find /tmp -name 'cachegrind.out.*.gz' -delete
+
+# Example
+# * * * * * cd /var/www/html && /usr/local/bin/php artisan schedule:run >> /dev/null 2>&1
