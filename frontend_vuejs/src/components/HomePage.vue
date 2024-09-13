@@ -1,19 +1,7 @@
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="space-y-4">
-      <button
-          @click="$router.push('/login')"
-          class="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Login
-      </button>
-      <button
-          @click="$router.push('/registration')"
-          class="w-full px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-      >
-        Register
-      </button>
-    </div>
+  <div class="flex flex-col justify-center items-center h-screen bg-transparent">
+    <img src="@/assets/logo.512.png" alt="Main Logo" class="p-4"/>
+    <h1 class="text-5xl bg-white rounded py-5 px-3 font-ribeye-marrow">Tan Tan Barber Shop</h1>
   </div>
 </template>
 
@@ -24,5 +12,9 @@ export default {
 </script>
 
 <style scoped>
-/* Add any additional styles if needed */
+@import url('https://fonts.googleapis.com/css2?family=Ribeye+Marrow&display=swap');
+
+.font-ribeye-marrow {
+  font-family: 'Ribeye Marrow', cursive;
+}
 </style>

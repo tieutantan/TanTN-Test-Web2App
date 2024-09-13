@@ -1,8 +1,6 @@
-
 <template>
-  <div class="flex items-center justify-center min-h-screen bg-gray-100">
-    <div class="w-full max-w-md p-8 space-y-6 bg-white rounded-lg shadow-md">
-      <h2 class="text-2xl font-bold text-center text-gray-900">Login</h2>
+  <div class="flex items-center justify-center min-h-screen bg-transparent">
+    <div class="space-y-4 bg-white p-10 rounded">
       <form @submit.prevent="handleSubmit" class="space-y-4">
         <div>
           <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
