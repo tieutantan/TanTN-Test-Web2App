@@ -1,5 +1,5 @@
 <template>
-  <div class="fixed top-0 w-full flex justify-center bg-white bg-opacity-80 p-5 shadow-md z-50">
+  <div class="top-0 w-full flex justify-center bg-white bg-opacity-80 p-5 shadow-md z-50 md:fixed">
     <button
       @click="$router.push('/')"
       :class="buttonClass('/')"
