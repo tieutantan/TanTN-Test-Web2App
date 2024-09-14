@@ -1,9 +1,12 @@
 <?php
 
 use Firebase\JWT\JWT;
-use Firebase\JWT\Key;
+use app\models\User;
+use yii\rest\Controller;
+use yii\web\BadRequestHttpException;
+use yii\web\UnauthorizedHttpException;
 
-class AuthController extends \yii\rest\Controller
+class AuthController extends Controller
 {
     public function actionLogin()
     {
@@ -11,9 +14,9 @@ class AuthController extends \yii\rest\Controller
         $username = $request->post('username');
         $password = $request->post('password');
 
-        // Xác thực người dùng
-        $user = User::findOne(['username' => $username]);
-        if ($user && Yii::$app->security->validatePassword($password, $user->password_hash)) {
+        //
+        $user = User::findByUsername($username);
+        if ($user && $user->validatePassword($password)) {
             $key = "your_secret_key";
             $payload = [
                 'iss' => "http://example.org",
@@ -30,7 +33,35 @@ class AuthController extends \yii\rest\Controller
             $jwt = JWT::encode($payload, $key, 'HS256');
             return ['token' => $jwt];
         } else {
-            throw new \yii\web\UnauthorizedHttpException('Invalid username or password');
+            throw new UnauthorizedHttpException('Invalid username or password');
+        }
+    }
+
+    /**
+     * @throws \yii\db\Exception
+     * @throws \yii\base\Exception
+     * @throws BadRequestHttpException
+     */
+    public function actionRegister()
+    {
+        $request = Yii::$app->request;
+        $fullName = $request->post('fullName');
+        $username = $request->post('username');
+        $password = $request->post('password');
+
+        if (empty($fullName) || empty($username) || empty($password)) {
+            throw new BadRequestHttpException('All fields are required');
+        }
+
+        $user = new User();
+        $user->fullName = $fullName;
+        $user->username = $username;
+        $user->password = Yii::$app->security->generatePasswordHash($password);
+
+        if ($user->save()) {
+            return ['message' => 'User registered successfully'];
+        } else {
+            return ['errors' => $user->errors];
         }
     }
 }
