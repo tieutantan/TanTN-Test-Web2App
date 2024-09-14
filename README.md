@@ -1,16 +1,22 @@
-# Laraker
+## Setup Local Test
+1. `docker-compose up -d`
+2. `docker exec tan_w2a-php83 composer install && docker exec tan_w2a-php83 php yii migrate`
+3. `cd frontend_vuejs && npm install && npm run serve`
 
-- PHP 8.3, xDebug 3.3.1
-- MariaDB 11.2
-- phpmyadmin:latest
-- phpRedisAdmin:latest
-- redis:alpine
-- Auto clear access log, error log.
+Test on http://localhost:1112
 
-## Setup
-- Install Docker ``./install_docker.sh`` * Optional
-- ``docker-compose up -d``
+On 1st time to click Facebook login, it will display `init not called with valid version` 
+cause localhost without HTTPS, F5 page and click button again, it will work.
 
-## Commands
 
-- ``docker exec -it tan_w2a-php83 /bin/bash``
+### Frontend: VueJS3, Responsive Design, TailwindCSS
+- `/` Home
+- `/login` Login
+- `/register` Register
+- `/dashboard` Dashboard (require login, if not logged in, redirect to /login, load data from api.nasa.gov, pagination)
+
+
+### Backend: Yii2, RESTful API, JWT
+- `/index.php?r=auth/login` API Login (validation inputs, return token, redirect to /dashboard)
+- `/index.php?r=auth/register` API Register (validation inputs, add user to db, return token, redirect to /dashboard)
+- `/index.php?r=auth/check` API Simple check logged token.
