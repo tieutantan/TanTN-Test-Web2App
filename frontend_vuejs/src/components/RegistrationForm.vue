@@ -14,11 +14,11 @@
           />
         </div>
         <div>
-          <label for="usernameOrEmail" class="block text-sm font-medium text-gray-700">Username or Email</label>
+          <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
           <input
-            v-model="usernameOrEmail"
-            id="usernameOrEmail"
-            name="usernameOrEmail"
+            v-model="username"
+            id="username"
+            name="username"
             type="text"
             required
             class="w-full px-3 py-2 mt-1 border rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
@@ -60,22 +60,36 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   data() {
     return {
       fullName: '',
-      usernameOrEmail: '',
+      username: '',
       password: '',
       confirmPassword: ''
     };
   },
   methods: {
-    handleSubmit() {
-      // Handle form submission
-      console.log('Full Name:', this.fullName);
-      console.log('Username or Email:', this.usernameOrEmail);
-      console.log('Password:', this.password);
-      console.log('Confirm Password:', this.confirmPassword);
+    async handleSubmit() {
+      if (this.password !== this.confirmPassword) {
+        alert('Passwords do not match');
+        return;
+      }
+
+      try {
+        const response = await axios.post('http://localhost:1111/auth/register', {
+          fullName: this.fullName,
+          username: this.username,
+          password: this.password
+        });
+        console.log('Registration successful:', response.data);
+        // Handle successful registration (e.g., redirect to login page)
+      } catch (error) {
+        console.error('Registration failed:', error.response.data);
+        // Handle registration error (e.g., display error message)
+      }
     }
   }
 };
